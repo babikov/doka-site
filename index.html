@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Дока — твой агент на компьютере</title>
+  <meta name="description" content="Умный агент который делает задачи за тебя. Локально. Без интернета. Бесплатно."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&family=Geologica:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --bg2: #0f0f0f;
+      --bg3: #161616;
+      --border: #1e1e1e;
+      --border2: #2a2a2a;
+      --text: #e8e6e0;
+      --text2: #7a7870;
+      --text3: #3a3836;
+      --accent: #d4ff00;
+      --accent2: #b8e000;
+      --accent-dim: rgba(212,255,0,0.08);
+      --accent-glow: rgba(212,255,0,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Geologica', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s;
+    }
+    .cursor.large { width: 40px; height: 40px; background: transparent; border: 1px solid var(--accent); opacity: 0.5; }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,0.9);
+      border-color: var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-download {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #000;
+      background: var(--accent);
+      padding: 8px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .nav-download:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 60%, rgba(212,255,0,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 30% 20% at 20% 80%, rgba(212,255,0,0.02) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Floating grid lines */
+    .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,255,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,255,0,0.02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(212,255,0,0.2);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 40px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 300;
+      font-size: clamp(36px, 7vw, 80px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 18px);
+      color: var(--text2);
+      max-width: 480px;
+      margin-bottom: 48px;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: #000;
+      background: var(--accent);
+      padding: 14px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      border: none;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(212,255,0,0.2);
+    }
+
+    .btn-primary.mac {
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid var(--accent);
+    }
+    .btn-primary.mac:hover {
+      background: var(--accent-dim);
+      box-shadow: 0 8px 32px rgba(212,255,0,0.1);
+    }
+
+    .btn-secondary {
+      font-size: 13px;
+      color: var(--text2);
+      text-decoration: none;
+      padding: 14px 24px;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      transition: color 0.15s, border-color 0.15s;
+      cursor: none;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: var(--border2); }
+
+    .hero-note {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text3);
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    /* Demo window */
+    .demo-wrap {
+      width: 100%;
+      max-width: 720px;
+      margin: 80px auto 0;
+      animation: fadeUp 0.8s 0.4s ease both;
+      position: relative;
+    }
+
+    .demo-glow {
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(ellipse at center, rgba(212,255,0,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .demo-window {
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .demo-bar {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-dots { display: flex; gap: 6px; }
+    .demo-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--border2);
+    }
+    .demo-dot:first-child { background: #ff5f57; }
+    .demo-dot:nth-child(2) { background: #ffbd2e; }
+    .demo-dot:nth-child(3) { background: #28c840; }
+
+    .demo-title {
+      flex: 1;
+      text-align: center;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+
+    .demo-body {
+      padding: 32px 28px;
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+    }
+    .demo-body::-webkit-scrollbar { display: none; }
+    .demo-body { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .demo-msg {
+      display: flex;
+      gap: 12px;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .demo-msg.user { flex-direction: row-reverse; }
+
+    .demo-avatar {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(212,255,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .demo-bubble {
+      max-width: 75%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .demo-msg.user .demo-bubble {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px 10px 3px 10px;
+    }
+
+    .demo-msg.agent .demo-bubble {
+      color: var(--text);
+    }
+
+    .demo-typing {
+      display: flex;
+      gap: 4px;
+      padding: 4px 0;
+    }
+    .demo-typing span {
+      width: 5px; height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: typing 1.2s ease-in-out infinite;
+    }
+    .demo-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .demo-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { opacity: 0.2; transform: scale(0.8); }
+      30% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Features */
+    .section {
+      padding: 120px 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 300;
+      font-size: clamp(24px, 4vw, 40px);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 60px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .feature {
+      background: var(--bg);
+      padding: 36px 32px;
+      transition: background 0.2s;
+    }
+    .feature:hover { background: var(--bg2); }
+
+    .feature-icon {
+      font-size: 24px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature h3 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* Comparison */
+    .compare {
+      margin-top: 80px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .compare-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-row:last-child { border-bottom: none; }
+
+    .compare-cell {
+      padding: 16px 24px;
+      font-size: 13px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .compare-cell:last-child { border-right: none; }
+
+    .compare-row.header .compare-cell {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--text2);
+      background: var(--bg2);
+    }
+
+    .compare-row.header .compare-cell.doka {
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .check { color: var(--accent); }
+    .cross { color: var(--text3); }
+
+    /* CTA */
+    .cta {
+      padding: 120px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(212,255,0,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta h2 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 300;
+      font-size: clamp(28px, 5vw, 56px);
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .cta h2 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .cta p {
+      color: var(--text2);
+      font-size: 15px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text3);
+    }
+
+    .footer-logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .section { padding: 80px 20px; }
+      .compare { display: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav id="nav">
+  <div class="nav-logo">Дока</div>
+  <a href="#cta-download" class="nav-download">Скачать</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Бесплатно · Локально · Windows & Mac
+  </div>
+
+  <h1>Агент который<br/>делает за <em>тебя</em></h1>
+
+  <p class="hero-sub">
+    Скажи что нужно — Дока найдёт, откроет, разберётся.
+    Работает на твоём компьютере. Данные никуда не уходят.
+  </p>
+
+  <div class="hero-actions" id="hero-download">
+    <a href="#" class="btn-primary" id="download">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+      Скачать для Windows
+    </a>
+    <a href="#" class="btn-primary mac" id="download-mac">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+      Скачать для Mac
+    </a>
+    <a href="#features" class="btn-secondary">Как это работает</a>
+  </div>
+
+  <p class="hero-note">Бесплатно · Без регистрации · Без облака · Windows & Mac</p>
+
+  <div class="demo-wrap">
+    <div class="demo-glow"></div>
+    <div class="demo-window">
+      <div class="demo-bar">
+        <div class="demo-dots">
+          <div class="demo-dot"></div>
+          <div class="demo-dot"></div>
+          <div class="demo-dot"></div>
+        </div>
+        <div class="demo-title">Дока</div>
+      </div>
+      <div class="demo-body" id="demoBody"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-label reveal">Возможности</div>
+  <div class="section-title reveal">Делает реальные задачи,<br/>не просто отвечает</div>
+
+  <div class="features reveal">
+    <div class="feature">
+      <span class="feature-icon">◎</span>
+      <h3>Поиск в интернете</h3>
+      <p>Находит актуальную информацию, читает страницы, собирает данные из нескольких источников.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">◈</span>
+      <h3>Работа в браузере</h3>
+      <p>Открывает сайты, заполняет формы, взаимодействует со страницами как человек.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">◉</span>
+      <h3>Полная приватность</h3>
+      <p>Всё работает локально на твоём компьютере. Никаких серверов, никаких логов, никаких утечек.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">○</span>
+      <h3>Без интернета</h3>
+      <p>Установил один раз — работает офлайн. Не зависит от чужих серверов и блокировок.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">◇</span>
+      <h3>На русском языке</h3>
+      <p>Понимает и отвечает по-русски. Заточен под русскоязычную аудиторию.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">◆</span>
+      <h3>Бесплатно навсегда</h3>
+      <p>Базовые возможности бесплатны без ограничений по времени. Никаких подписок.</p>
+    </div>
+  </div>
+
+  <div class="compare reveal" style="margin-top:60px">
+    <div class="compare-row header">
+      <div class="compare-cell">Параметр</div>
+      <div class="compare-cell doka">◈ Дока</div>
+      <div class="compare-cell">Облачные агенты</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Работает офлайн</div>
+      <div class="compare-cell"><span class="check">✓</span> Да</div>
+      <div class="compare-cell"><span class="cross">✗</span> Нет</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Данные на твоём ПК</div>
+      <div class="compare-cell"><span class="check">✓</span> Да</div>
+      <div class="compare-cell"><span class="cross">✗</span> Уходят на сервер</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Без VPN</div>
+      <div class="compare-cell"><span class="check">✓</span> Да</div>
+      <div class="compare-cell"><span class="cross">✗</span> Нужен VPN</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Стоимость</div>
+      <div class="compare-cell"><span class="check">✓</span> Бесплатно</div>
+      <div class="compare-cell"><span class="cross">✗</span> от $20/мес</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Windows</div>
+      <div class="compare-cell"><span class="check">✓</span> Да</div>
+      <div class="compare-cell"><span class="cross">✗</span> Только браузер</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta-download">
+  <div class="cta-glow"></div>
+  <p class="section-label reveal">Начать</p>
+  <h2 class="reveal">Скачай и<br/><em>попробуй сейчас</em></h2>
+  <p class="reveal">Установка за 2 минуты. Никакой регистрации.</p>
+  <div class="reveal" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center">
+    <a href="#download" class="btn-primary" style="display:inline-flex">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+      Скачать для Windows
+    </a>
+    <a href="#download-mac" class="btn-primary mac" style="display:inline-flex">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+      Скачать для Mac
+    </a>
+  </div>
+  <p class="reveal" style="margin-top:12px;font-size:12px;color:var(--text3)">
+    Windows 10/11 · macOS 12+ · ~600 MB с моделью
+  </p>
+</section>
+
+<footer>
+  <div class="footer-logo">Дока</div>
+  <div>Твой агент на компьютере</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor')
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px'
+    cursor.style.top = e.clientY + 'px'
+  })
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('large'))
+    el.addEventListener('mouseleave', () => cursor.classList.remove('large'))
+  })
+
+  // Nav scroll
+  const nav = document.getElementById('nav')
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40)
+  })
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') })
+  }, { threshold: 0.15 })
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
+
+  // Demo animation
+  const messages = [
+    { role: 'user', text: 'Найди новости про ИИ сегодня' },
+    { role: 'agent', text: 'Ищу актуальные новости...' },
+    { role: 'agent', text: 'Нашёл 5 материалов за сегодня:\n\n• OpenAI выпустила новую версию GPT\n• Яндекс обновил Алису\n• DeepSeek представил новую модель' },
+    { role: 'user', text: 'Открой первую ссылку и кратко перескажи' },
+    { role: 'agent', text: 'Открываю страницу...' },
+    { role: 'agent', text: 'Готово. Главное из статьи:\nOpenAI анонсировала GPT-5 с улучшенным reasoning. Модель в 2 раза быстрее предыдущей версии.' },
+  ]
+
+  let i = 0
+  const body = document.getElementById('demoBody')
+
+  function addMessage(msg) {
+    const el = document.createElement('div')
+    el.className = `demo-msg ${msg.role}`
+    el.style.animationDelay = '0s'
+
+    if (msg.role === 'agent') {
+      el.innerHTML = `
+        <div class="demo-avatar">◈</div>
+        <div class="demo-bubble">${msg.text.replace(/\n/g, '<br/>')}</div>
+      `
+    } else {
+      el.innerHTML = `<div class="demo-bubble">${msg.text}</div>`
+    }
+    body.appendChild(el)
+    body.scrollTop = body.scrollHeight
+  }
+
+  function showTyping() {
+    const el = document.createElement('div')
+    el.className = 'demo-msg agent'
+    el.id = 'typing'
+    el.innerHTML = `
+      <div class="demo-avatar">◈</div>
+      <div class="demo-bubble"><div class="demo-typing"><span></span><span></span><span></span></div></div>
+    `
+    body.appendChild(el)
+    body.scrollTop = body.scrollHeight
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing')
+    if (t) t.remove()
+  }
+
+  function nextMessage() {
+    if (i >= messages.length) {
+      setTimeout(() => {
+        body.innerHTML = ''
+        i = 0
+        nextMessage()
+      }, 3000)
+      return
+    }
+
+    const msg = messages[i]
+    i++
+
+    if (msg.role === 'user') {
+      addMessage(msg)
+      setTimeout(() => { showTyping(); setTimeout(nextMessage, 1200) }, 600)
+    } else {
+      removeTyping()
+      addMessage(msg)
+      const delay = i < messages.length && messages[i].role === 'user' ? 2000 : 800
+      setTimeout(nextMessage, delay)
+    }
+  }
+
+  setTimeout(nextMessage, 800)
+</script>
+</body>
+</html>
