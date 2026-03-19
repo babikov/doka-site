@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Дока — твой агент на компьютере</title>
   <meta name="description" content="ChatGPT, который работает у тебя на компьютере. Без VPN. Без подписки. Без слежки. Локально. Бесплатно."/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Дока — AI-агент без VPN и подписки"/>
+  <meta property="og:description" content="ChatGPT который работает на твоём компьютере. Без VPN. Без подписки. Без слежки. Windows и Mac."/>
+  <meta property="og:url" content="https://doka.app/"/>
+  <meta property="og:type" content="website"/>
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Дока — AI-агент без VPN и подписки"/>
+  <meta name="twitter:description" content="ChatGPT который работает на твоём компьютере. Без VPN. Без подписки. Без слежки. Windows и Mac."/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&family=Geologica:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
@@ -626,18 +638,18 @@
   </p>
 
   <div class="hero-actions" id="hero-download">
-    <a href="https://github.com/babikov/doka/releases/download/v1.0.0/Doka.Setup.1.0.0.exe" class="btn-primary" id="download">
+    <a href="https://github.com/babikov/doka-site/releases/download/v1.0.1/Doka.Setup.1.0.1.exe" class="btn-primary" id="download">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
       Скачать для Windows
     </a>
-    <a href="https://github.com/babikov/doka/releases/download/v1.0.0/Doka-1.0.0-arm64.dmg" class="btn-primary mac" id="download-mac">
+    <a href="https://github.com/babikov/doka-site/releases/download/v1.0.1/Doka-1.0.1-arm64.dmg" class="btn-primary mac" id="download-mac">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
       Скачать для Mac
     </a>
     <a href="#features" class="btn-secondary">Как это работает</a>
   </div>
 
-  <p class="hero-note">Бесплатно · Без регистрации · Без облака · Windows & Mac</p>
+  <p class="hero-note">Без регистрации · Без подписки · Windows & Mac</p>
 
   <!-- Правка 3: ключевой месседж под hero-actions -->
   <div class="hero-keymsg">
@@ -742,17 +754,136 @@
   </div>
 </section>
 
+<section class="section" id="use-cases">
+  <div class="section-label reveal">Примеры задач</div>
+  <div class="section-title reveal">Что можно попросить<br/>прямо сейчас</div>
+
+  <div class="usecases reveal">
+    <div class="usecase">
+      <div class="usecase-icon">◎</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Найди последние новости про санкции и кратко объясни что изменилось»</div>
+        <div class="usecase-desc">Ищет по нескольким открытым источникам, собирает в понятный ответ</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">◈</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Открой эту статью и перескажи главное за минуту»</div>
+        <div class="usecase-desc">Читает страницу по ссылке и выдаёт краткое резюме без лишней воды</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">◇</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Переведи этот английский текст и выдели три главные мысли»</div>
+        <div class="usecase-desc">Переводит и структурирует — без копипасты в переводчик и обратно</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">◉</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Как получить загранпаспорт через Госуслуги? Какие документы нужны?»</div>
+        <div class="usecase-desc">Читает актуальные инструкции прямо с официального сайта — никаких устаревших данных</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">○</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Что пишут в открытых источниках об этой компании? Ищу туда работу»</div>
+        <div class="usecase-desc">Ищет отзывы, новости и упоминания — даёт честную картину до собеседования</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">◌</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Объясни простыми словами что означают эти пункты в договоре аренды»</div>
+        <div class="usecase-desc">Разбирает юридический текст на человеческий язык, указывает на подводные камни</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">◫</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Напиши вежливый ответ на негативный отзыв о моём магазине»</div>
+        <div class="usecase-desc">Составит корректный ответ в нужном тоне — хоть для Wildberries, хоть для 2ГИС</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">◆</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Помоги написать претензию в магазин на русском, по закону о защите прав потребителей»</div>
+        <div class="usecase-desc">Составляет документ на понятном русском — без юридического птичьего языка</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">◐</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Проверь отзывы на этот отель на Яндекс Картах и Booking, стоит ли бронировать?»</div>
+        <div class="usecase-desc">Читает отзывы с обеих площадок и выдаёт короткий вердикт</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .usecases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  .usecase {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .usecase:hover {
+    border-color: var(--border2);
+    background: var(--bg3);
+  }
+
+  .usecase-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  .usecase-prompt {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 400;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .usecase-prompt::before { content: '«'; }
+  .usecase-prompt::after  { content: '»'; }
+
+  .usecase-desc {
+    font-size: 12px;
+    color: var(--text2);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+</style>
+
 <section class="cta" id="cta-download">
   <div class="cta-glow"></div>
   <p class="section-label reveal">Начать</p>
   <h2 class="reveal">Скачай и<br/><em>попробуй сейчас</em></h2>
   <p class="reveal">Установка за 2 минуты. Никакой регистрации.</p>
   <div class="reveal" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center">
-    <a href="https://github.com/babikov/doka/releases/download/v1.0.0/Doka.Setup.1.0.0.exe" class="btn-primary" style="display:inline-flex">
+    <a href="https://github.com/babikov/doka-site/releases/download/v1.0.1/Doka.Setup.1.0.1.exe" class="btn-primary" style="display:inline-flex">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
       Скачать для Windows
     </a>
-    <a href="https://github.com/babikov/doka/releases/download/v1.0.0/Doka-1.0.0-arm64.dmg" class="btn-primary mac" style="display:inline-flex">
+    <a href="https://github.com/babikov/doka-site/releases/download/v1.0.1/Doka-1.0.1-arm64.dmg" class="btn-primary mac" style="display:inline-flex">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
       Скачать для Mac
     </a>
