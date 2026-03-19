@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Дока — твой агент на компьютере</title>
-  <meta name="description" content="Умный агент который делает задачи за тебя. Локально. Без интернета. Бесплатно."/>
+  <meta name="description" content="ChatGPT, который работает у тебя на компьютере. Без VPN. Без подписки. Без слежки. Локально. Бесплатно."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&family=Geologica:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
@@ -180,7 +180,7 @@
     .hero-sub {
       font-size: clamp(15px, 2vw, 18px);
       color: var(--text2);
-      max-width: 480px;
+      max-width: 520px;
       margin-bottom: 48px;
       font-weight: 300;
       animation: fadeUp 0.6s 0.2s ease both;
@@ -247,12 +247,31 @@
       animation: fadeUp 0.6s 0.4s ease both;
     }
 
+    /* Key message block */
+    .hero-keymsg {
+      margin-top: 32px;
+      padding: 16px 28px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(212,255,0,0.15);
+      border-radius: 10px;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 300;
+      max-width: 560px;
+      text-align: center;
+      animation: fadeUp 0.6s 0.45s ease both;
+    }
+    .hero-keymsg strong {
+      color: var(--accent);
+      font-weight: 400;
+    }
+
     /* Demo window */
     .demo-wrap {
       width: 100%;
       max-width: 720px;
-      margin: 80px auto 0;
-      animation: fadeUp 0.8s 0.4s ease both;
+      margin: 64px auto 0;
+      animation: fadeUp 0.8s 0.5s ease both;
       position: relative;
     }
 
@@ -532,6 +551,19 @@
       letter-spacing: 0.05em;
     }
 
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .footer-links a {
+      color: var(--text3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text2); }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -550,6 +582,7 @@
       .section { padding: 80px 20px; }
       .compare { display: none; }
       footer { flex-direction: column; gap: 12px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
     }
   </style>
 </head>
@@ -579,16 +612,17 @@
   <div class="hero-bg"></div>
   <div class="grid-lines"></div>
 
+  <!-- Правка 1: «Локально» → «Без VPN» -->
   <div class="hero-badge">
     <span class="badge-dot"></span>
-    Бесплатно · Локально · Windows & Mac
+    Бесплатно · Без VPN · Windows & Mac
   </div>
 
   <h1>Агент который<br/>делает за <em>тебя</em></h1>
 
+  <!-- Правка 2: новый подзаголовок -->
   <p class="hero-sub">
-    Скажи что нужно — Дока найдёт, откроет, разберётся.
-    Работает на твоём компьютере. Данные никуда не уходят.
+    Найди цену, прочитай статью, разберись с сайтом — и всё это без VPN, без подписки и без слежки. Модель работает прямо на твоём компьютере.
   </p>
 
   <div class="hero-actions" id="hero-download">
@@ -605,6 +639,13 @@
 
   <p class="hero-note">Бесплатно · Без регистрации · Без облака · Windows & Mac</p>
 
+  <!-- Правка 3: ключевой месседж под hero-actions -->
+  <div class="hero-keymsg">
+    <strong>Дока</strong> — это ChatGPT, который работает у тебя на компьютере.<br/>
+    <strong>Без VPN. Без подписки. Без слежки.</strong>
+  </div>
+
+  <!-- Правка 9: демо с российским сценарием (Авито) -->
   <div class="demo-wrap">
     <div class="demo-glow"></div>
     <div class="demo-window">
@@ -636,20 +677,23 @@
       <h3>Работа в браузере</h3>
       <p>Открывает сайты, заполняет формы, взаимодействует со страницами как человек.</p>
     </div>
+    <!-- Правка 6: «Полная приватность» с российским контекстом -->
     <div class="feature">
       <span class="feature-icon">◉</span>
       <h3>Полная приватность</h3>
-      <p>Всё работает локально на твоём компьютере. Никаких серверов, никаких логов, никаких утечек.</p>
+      <p>Твои запросы не улетают в Сан-Франциско. Всё работает на твоём компьютере — ни один байт не покидает устройство. Идеально для работы с документами, клиентами и коммерческой тайной.</p>
     </div>
+    <!-- Правка 4: «Без интернета» → «Модель на твоём ПК» -->
     <div class="feature">
       <span class="feature-icon">○</span>
-      <h3>Без интернета</h3>
-      <p>Установил один раз — работает офлайн. Не зависит от чужих серверов и блокировок.</p>
+      <h3>Модель на твоём ПК</h3>
+      <p>AI-модель запускается прямо на твоём компьютере — даже при плохом интернете. Никаких чужих серверов, никакой зависимости от зарубежных сервисов.</p>
     </div>
+    <!-- Правка 5: «На русском языке» — усилить -->
     <div class="feature">
       <span class="feature-icon">◇</span>
       <h3>На русском языке</h3>
-      <p>Понимает и отвечает по-русски. Заточен под русскоязычную аудиторию.</p>
+      <p>Понимает разговорный русский, отвечает без акцента и без кальки с английского. Проверено на новостях, Хабре и Госуслугах.</p>
     </div>
     <div class="feature">
       <span class="feature-icon">◆</span>
@@ -658,6 +702,7 @@
     </div>
   </div>
 
+  <!-- Правка 7: «Без VPN» — первая строка таблицы -->
   <div class="compare reveal" style="margin-top:60px">
     <div class="compare-row header">
       <div class="compare-cell">Параметр</div>
@@ -665,9 +710,9 @@
       <div class="compare-cell">Облачные агенты</div>
     </div>
     <div class="compare-row">
-      <div class="compare-cell">Работает офлайн</div>
+      <div class="compare-cell">Без VPN</div>
       <div class="compare-cell"><span class="check">✓</span> Да</div>
-      <div class="compare-cell"><span class="cross">✗</span> Нет</div>
+      <div class="compare-cell"><span class="cross">✗</span> Нужен VPN</div>
     </div>
     <div class="compare-row">
       <div class="compare-cell">Данные на твоём ПК</div>
@@ -675,17 +720,22 @@
       <div class="compare-cell"><span class="cross">✗</span> Уходят на сервер</div>
     </div>
     <div class="compare-row">
-      <div class="compare-cell">Без VPN</div>
-      <div class="compare-cell"><span class="check">✓</span> Да</div>
-      <div class="compare-cell"><span class="cross">✗</span> Нужен VPN</div>
-    </div>
-    <div class="compare-row">
       <div class="compare-cell">Стоимость</div>
       <div class="compare-cell"><span class="check">✓</span> Бесплатно</div>
       <div class="compare-cell"><span class="cross">✗</span> от $20/мес</div>
     </div>
     <div class="compare-row">
+      <div class="compare-cell">AI-модель локальная</div>
+      <div class="compare-cell"><span class="check">✓</span> Да</div>
+      <div class="compare-cell"><span class="cross">✗</span> Нет</div>
+    </div>
+    <div class="compare-row">
       <div class="compare-cell">Windows</div>
+      <div class="compare-cell"><span class="check">✓</span> Да</div>
+      <div class="compare-cell"><span class="cross">✗</span> Только браузер</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">macOS</div>
       <div class="compare-cell"><span class="check">✓</span> Да</div>
       <div class="compare-cell"><span class="cross">✗</span> Только браузер</div>
     </div>
@@ -707,14 +757,20 @@
       Скачать для Mac
     </a>
   </div>
+  <!-- Правка 8: системные требования -->
   <p class="reveal" style="margin-top:12px;font-size:12px;color:var(--text3)">
-    Windows 10/11 · macOS 12+ · ~600 MB с моделью
+    Windows 10/11 · macOS 12+ · от 8 ГБ RAM · от 1 ГБ на диске
   </p>
 </section>
 
+<!-- Правка 10: footer с контактом и GitHub -->
 <footer>
   <div class="footer-logo">Дока</div>
   <div>Твой агент на компьютере</div>
+  <div class="footer-links">
+    <a href="https://github.com/babikov" target="_blank" rel="noopener">Автор</a>
+    <a href="mailto:ilya.babikov@gmail.com">Обратная связь</a>
+  </div>
 </footer>
 
 <script>
@@ -741,14 +797,14 @@
   }, { threshold: 0.15 })
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
 
-  // Demo animation
+  // Demo animation — российский сценарий с Авито (правка 9)
   const messages = [
-    { role: 'user', text: 'Найди новости про ИИ сегодня' },
-    { role: 'agent', text: 'Ищу актуальные новости...' },
-    { role: 'agent', text: 'Нашёл 5 материалов за сегодня:\n\n• OpenAI выпустила новую версию GPT\n• Яндекс обновил Алису\n• DeepSeek представил новую модель' },
-    { role: 'user', text: 'Открой первую ссылку и кратко перескажи' },
-    { role: 'agent', text: 'Открываю страницу...' },
-    { role: 'agent', text: 'Готово. Главное из статьи:\nOpenAI анонсировала GPT-5 с улучшенным reasoning. Модель в 2 раза быстрее предыдущей версии.' },
+    { role: 'user', text: 'Найди на Авито iPhone 15 в Москве до 60 тысяч' },
+    { role: 'agent', text: 'Открываю Авито...' },
+    { role: 'agent', text: 'Нашёл 8 объявлений. Самое дешёвое — 54 900 ₽, 128 ГБ, состояние хорошее.\n\nХочешь открою страницу продавца?' },
+    { role: 'user', text: 'Да, открой и посмотри отзывы' },
+    { role: 'agent', text: 'Открываю профиль...' },
+    { role: 'agent', text: 'Продавец на Авито с 2019 года, 47 отзывов, рейтинг 4.9. Продаёт технику и телефоны. Последняя сделка — 3 дня назад.' },
   ]
 
   let i = 0
