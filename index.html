@@ -640,11 +640,11 @@
   </p>
 
   <div class="hero-actions" id="hero-download">
-    <a href="https://github.com/babikov/doka-site/releases/download/v1.0.2/Doka.Setup.1.0.2.exe" class="btn-primary" id="download">
+    <a href="https://github.com/babikov/doka-site/releases/download/v1.1.0/Doka.Setup.1.1.0.exe" class="btn-primary" id="download">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
       Скачать для Windows
     </a>
-    <a href="https://github.com/babikov/doka-site/releases/download/v1.0.2/Doka-1.0.2-arm64.dmg" class="btn-primary mac" id="download-mac">
+    <a href="https://github.com/babikov/doka-site/releases/download/v1.1.0/Doka-1.1.0-arm64.dmg" class="btn-primary mac" id="download-mac">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
       Скачать для Mac
     </a>
@@ -652,6 +652,27 @@
   </div>
 
   <p class="hero-note">Без регистрации · Без подписки · Windows & Mac</p>
+
+  <!-- macOS: инструкция «файл повреждён» в hero -->
+  <div class="macos-tip" style="animation: fadeUp 0.6s 0.5s ease both; opacity:0">
+    <button class="macos-tip-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;opacity:0.7"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+      macOS говорит «файл повреждён»?
+      <svg class="macos-tip-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="macos-tip-body">
+      <p>Это защита macOS от неподписанных приложений — Дока безопасна. Чтобы обойти блокировку:</p>
+      <ol>
+        <li>Открой <strong>Терминал</strong> (Spotlight → <code>Terminal</code>)</li>
+        <li>Вставь команду и нажми Enter:</li>
+      </ol>
+      <div class="macos-code-wrap">
+        <code class="macos-code">xattr -cr /Applications/Doka.app</code>
+        <button class="macos-copy" onclick="navigator.clipboard.writeText('xattr -cr /Applications/Doka.app');this.textContent='Скопировано ✓';setTimeout(()=>this.textContent='Копировать',2000)">Копировать</button>
+      </div>
+      <p style="margin-top:10px">После этого открой Дока как обычно.</p>
+    </div>
+  </div>
 
   <!-- Правка 3: ключевой месседж под hero-actions -->
   <div class="hero-keymsg">
@@ -714,6 +735,22 @@
       <h3>Бесплатно навсегда</h3>
       <p>Базовые возможности бесплатны без ограничений по времени. Никаких подписок.</p>
     </div>
+    <!-- Новые фичи из роудмапа Фазы 0 -->
+    <div class="feature">
+      <span class="feature-icon">◫</span>
+      <h3>История чатов</h3>
+      <p>Все разговоры сохраняются на твоём компьютере. Переключайся, переименовывай, возвращайся к старым диалогам.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">◪</span>
+      <h3>Загрузка файлов</h3>
+      <p>Загружай PDF и TXT прямо в чат. Дока прочитает документ и ответит на вопросы по его содержимому — без облака, без утечек.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">◬</span>
+      <h3>Выбор модели</h3>
+      <p>Три режима: быстрый (1.7B), сбалансированный (4B) и мощный (8B). Выбирай под задачу — прямо в интерфейсе.</p>
+    </div>
   </div>
 
   <!-- Правка 7: «Без VPN» — первая строка таблицы -->
@@ -752,6 +789,21 @@
       <div class="compare-cell">macOS</div>
       <div class="compare-cell"><span class="check">✓</span> Да</div>
       <div class="compare-cell"><span class="cross">✗</span> Только браузер</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">История чатов</div>
+      <div class="compare-cell"><span class="check">✓</span> Да, локально</div>
+      <div class="compare-cell"><span class="cross">✗</span> На их серверах</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Загрузка файлов (PDF/TXT)</div>
+      <div class="compare-cell"><span class="check">✓</span> Бесплатно</div>
+      <div class="compare-cell"><span class="cross">✗</span> Только в платных</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Выбор модели</div>
+      <div class="compare-cell"><span class="check">✓</span> 1.7B / 4B / 8B</div>
+      <div class="compare-cell"><span class="cross">✗</span> Фиксирована</div>
     </div>
   </div>
 </section>
@@ -817,11 +869,19 @@
         <div class="usecase-desc">Составляет документ на понятном русском — без юридического птичьего языка</div>
       </div>
     </div>
+    <!-- Новые сценарии: загрузка файлов -->
     <div class="usecase">
-      <div class="usecase-icon">◐</div>
+      <div class="usecase-icon">◪</div>
       <div class="usecase-body">
-        <div class="usecase-prompt">«Проверь отзывы на этот отель на Яндекс Картах и Booking, стоит ли бронировать?»</div>
-        <div class="usecase-desc">Читает отзывы с обеих площадок и выдаёт короткий вердикт</div>
+        <div class="usecase-prompt">«Вот PDF договора — есть там подводные камни? На что обратить внимание?»</div>
+        <div class="usecase-desc">Читает загруженный документ и выделяет спорные пункты. Файл остаётся только на твоём компьютере</div>
+      </div>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon">◫</div>
+      <div class="usecase-body">
+        <div class="usecase-prompt">«Возобновим вчерашний разговор — что мы решили про бюджет?»</div>
+        <div class="usecase-desc">История чатов сохраняется локально — можно вернуться к любому диалогу в любой момент</div>
       </div>
     </div>
   </div>
@@ -881,11 +941,11 @@
   <h2 class="reveal">Скачай и<br/><em>попробуй сейчас</em></h2>
   <p class="reveal">Установка за 2 минуты. Никакой регистрации.</p>
   <div class="reveal" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center">
-    <a href="https://github.com/babikov/doka-site/releases/download/v1.0.2/Doka.Setup.1.0.2.exe" class="btn-primary" style="display:inline-flex">
+    <a href="https://github.com/babikov/doka-site/releases/download/v1.1.0/Doka.Setup.1.1.0.exe" class="btn-primary" style="display:inline-flex">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
       Скачать для Windows
     </a>
-    <a href="https://github.com/babikov/doka-site/releases/download/v1.0.2/Doka-1.0.2-arm64.dmg" class="btn-primary mac" style="display:inline-flex">
+    <a href="https://github.com/babikov/doka-site/releases/download/v1.1.0/Doka-1.1.0-arm64.dmg" class="btn-primary mac" style="display:inline-flex">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
       Скачать для Mac
     </a>
@@ -894,7 +954,135 @@
   <p class="reveal" style="margin-top:12px;font-size:12px;color:var(--text3)">
     Windows 10/11 · macOS 12+ · от 8 ГБ RAM · от 1 ГБ на диске
   </p>
+
+  <!-- macOS: инструкция «файл повреждён» -->
+  <div class="reveal macos-tip">
+    <button class="macos-tip-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;opacity:0.7"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.54 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+      macOS говорит «файл повреждён»?
+      <svg class="macos-tip-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="macos-tip-body">
+      <p>Это защита macOS от неподписанных приложений — Дока безопасна. Чтобы обойти блокировку:</p>
+      <ol>
+        <li>Открой <strong>Терминал</strong> (Spotlight → <code>Terminal</code>)</li>
+        <li>Вставь команду и нажми Enter:</li>
+      </ol>
+      <div class="macos-code-wrap">
+        <code class="macos-code">xattr -cr /Applications/Doka.app</code>
+        <button class="macos-copy" onclick="navigator.clipboard.writeText('xattr -cr /Applications/Doka.app');this.textContent='Скопировано ✓';setTimeout(()=>this.textContent='Копировать',2000)">Копировать</button>
+      </div>
+      <p style="margin-top:10px">После этого открой Дока как обычно.</p>
+    </div>
+  </div>
 </section>
+
+<style>
+  .macos-tip {
+    margin-top: 24px;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .macos-tip-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 18px;
+    background: var(--bg2);
+    border: none;
+    color: var(--text2);
+    font-family: 'Geologica', sans-serif;
+    font-size: 13px;
+    cursor: none;
+    text-align: left;
+    transition: background 0.15s, color 0.15s;
+  }
+  .macos-tip-toggle:hover { background: var(--bg3); color: var(--text); }
+
+  .macos-tip-icon { font-size: 14px; flex-shrink: 0; }
+
+  .macos-tip-arrow {
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    color: var(--text3);
+  }
+  .macos-tip.open .macos-tip-arrow { transform: rotate(180deg); }
+
+  .macos-tip-body {
+    display: none;
+    padding: 16px 18px 18px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+    background: var(--bg);
+  }
+  .macos-tip.open .macos-tip-body { display: block; }
+
+  .macos-tip-body ol {
+    padding-left: 18px;
+    margin: 8px 0;
+  }
+  .macos-tip-body li { margin-bottom: 4px; }
+
+  .macos-tip-body code {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  .macos-tip-body strong { color: var(--text); font-weight: 400; }
+
+  .macos-code-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+
+  .macos-code {
+    flex: 1;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    background: none;
+    border: none;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .macos-copy {
+    flex-shrink: 0;
+    font-family: 'Geologica', sans-serif;
+    font-size: 11px;
+    color: var(--text2);
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .macos-copy:hover { background: var(--border); color: var(--text); }
+</style>
 
 <!-- Правка 10: footer с контактом и GitHub -->
 <footer>
@@ -930,17 +1118,29 @@
   }, { threshold: 0.15 })
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
 
-  // Demo animation — российский сценарий с Авито (правка 9)
-  const messages = [
-    { role: 'user', text: 'Найди на Авито iPhone 15 в Москве до 60 тысяч' },
-    { role: 'agent', text: 'Открываю Авито...' },
-    { role: 'agent', text: 'Нашёл 8 объявлений. Самое дешёвое — 54 900 ₽, 128 ГБ, состояние хорошее.\n\nХочешь открою страницу продавца?' },
-    { role: 'user', text: 'Да, открой и посмотри отзывы' },
-    { role: 'agent', text: 'Открываю профиль...' },
-    { role: 'agent', text: 'Продавец на Авито с 2019 года, 47 отзывов, рейтинг 4.9. Продаёт технику и телефоны. Последняя сделка — 3 дня назад.' },
+  // Demo animation — два сценария: Авито и анализ PDF-файла
+  const scenarios = [
+    [
+      { role: 'user', text: 'Найди на Авито iPhone 15 в Москве до 60 тысяч' },
+      { role: 'agent', text: 'Открываю Авито...' },
+      { role: 'agent', text: 'Нашёл 8 объявлений. Самое дешёвое — 54 900 ₽, 128 ГБ, состояние хорошее.\n\nХочешь открою страницу продавца?' },
+      { role: 'user', text: 'Да, открой и посмотри отзывы' },
+      { role: 'agent', text: 'Открываю профиль...' },
+      { role: 'agent', text: 'Продавец на Авито с 2019 года, 47 отзывов, рейтинг 4.9. Продаёт технику и телефоны. Последняя сделка — 3 дня назад.' },
+    ],
+    [
+      { role: 'user', text: '📎 договор_аренды.pdf\nЕсть там подводные камни?' },
+      { role: 'agent', text: 'Читаю документ...' },
+      { role: 'agent', text: 'Нашёл 3 пункта, на которые стоит обратить внимание:\n\n1. Штраф за досрочный выезд — 2 месячных платежа\n2. Арендодатель вправе повышать цену раз в квартал\n3. Ответственность за ремонт техники — на арендаторе' },
+      { role: 'user', text: 'Это нормально или нет?' },
+      { role: 'agent', text: 'Пункт 1 — стандартный. Пункт 2 — нежелательный, лучше прописать фиксированную цену. Пункт 3 — спорный, обычно техника — зона ответственности владельца.' },
+    ],
   ]
+  let scenarioIdx = 0
+  const messages = scenarios[scenarioIdx]
 
   let i = 0
+  let currentMessages = scenarios[scenarioIdx]
   const body = document.getElementById('demoBody')
 
   function addMessage(msg) {
@@ -978,16 +1178,18 @@
   }
 
   function nextMessage() {
-    if (i >= messages.length) {
+    if (i >= currentMessages.length) {
       setTimeout(() => {
         body.innerHTML = ''
         i = 0
+        scenarioIdx = (scenarioIdx + 1) % scenarios.length
+        currentMessages = scenarios[scenarioIdx]
         nextMessage()
       }, 3000)
       return
     }
 
-    const msg = messages[i]
+    const msg = currentMessages[i]
     i++
 
     if (msg.role === 'user') {
@@ -996,7 +1198,7 @@
     } else {
       removeTyping()
       addMessage(msg)
-      const delay = i < messages.length && messages[i].role === 'user' ? 2000 : 800
+      const delay = i < currentMessages.length && currentMessages[i].role === 'user' ? 2000 : 800
       setTimeout(nextMessage, delay)
     }
   }
