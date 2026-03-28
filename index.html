@@ -619,7 +619,10 @@
 
 <nav id="nav">
   <div class="nav-logo">Дока</div>
-  <a href="#cta-download" class="nav-download">Скачать</a>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <button onclick="document.getElementById('troubleshooting').classList.add('open')" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;cursor:none;color:var(--text3);transition:color 0.15s;" onmouseenter="this.style.color='var(--text2)'" onmouseleave="this.style.color='var(--text3)'">Решение проблем</button>
+    <a href="#cta-download" class="nav-download">Скачать</a>
+  </div>
 </nav>
 
 <section class="hero">
@@ -865,7 +868,7 @@
     <div class="usecase">
       <div class="usecase-icon">◆</div>
       <div class="usecase-body">
-        <div class="usecase-prompt">«Помоги написать претензию в магазин на русском, по закону о защите прав потребителей»</div>
+        <div class="usecase-prompt">Помоги написать претензию в магазин на русском, по закону о защите прав потребителей</div>
         <div class="usecase-desc">Составляет документ на понятном русском — без юридического птичьего языка</div>
       </div>
     </div>
@@ -1082,6 +1085,166 @@
     transition: background 0.15s, color 0.15s;
   }
   .macos-copy:hover { background: var(--border); color: var(--text); }
+
+  /* Modal */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+  }
+  .modal-backdrop.open { display: flex; }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 700px;
+    padding: 48px;
+    position: relative;
+    margin: auto;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text2);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    font-size: 18px;
+    line-height: 1;
+    transition: background 0.15s, color 0.15s;
+  }
+  .modal-close:hover { background: var(--border); color: var(--text); }
+
+  .modal h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .modal-intro {
+    color: var(--text2);
+    font-size: 14px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  .modal-intro a { color: var(--text2); }
+  .modal-intro a:hover { color: var(--text); }
+  .modal-intro code {
+    font-family: monospace;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .modal hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  .modal h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 32px 0 12px;
+  }
+  .modal h2:first-of-type { margin-top: 0; }
+
+  .modal h3 {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+    margin: 28px 0 10px;
+  }
+
+  .modal p {
+    color: var(--text2);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+  .modal p strong { color: var(--text); font-weight: 400; }
+
+  .modal ol, .modal ul {
+    color: var(--text2);
+    font-size: 14px;
+    line-height: 1.7;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  .modal li { margin-bottom: 4px; }
+  .modal li strong { color: var(--text); font-weight: 400; }
+
+  .modal a { color: var(--accent2); text-decoration: none; }
+  .modal a:hover { text-decoration: underline; }
+
+  .modal code {
+    font-family: monospace;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .modal table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 12px;
+  }
+  .modal th {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    font-weight: 400;
+  }
+  .modal td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .modal td:first-child { color: var(--text); white-space: nowrap; }
+
+  .modal-section-label {
+    font-size: 11px;
+    font-family: 'Unbounded', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+
+  @media (max-width: 640px) {
+    .modal { padding: 32px 20px; }
+    .modal-backdrop { padding: 20px 12px; }
+  }
 </style>
 
 <!-- Правка 10: footer с контактом и GitHub -->
@@ -1091,8 +1254,132 @@
   <div class="footer-links">
     <a href="https://github.com/babikov" target="_blank" rel="noopener">Автор</a>
     <a href="mailto:ilya.babikov@gmail.com">Обратная связь</a>
+    <button onclick="document.getElementById('troubleshooting').classList.add('open')" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;cursor:none;color:var(--text3);transition:color 0.15s;" onmouseenter="this.style.color='var(--text2)'" onmouseleave="this.style.color='var(--text3)'">Решение проблем</button>
   </div>
 </footer>
+
+<!-- Modal: Решение проблем -->
+<div class="modal-backdrop" id="troubleshooting" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('troubleshooting').classList.remove('open')">×</button>
+
+    <div class="modal-section-label">Поддержка</div>
+    <h1>Решение проблем</h1>
+    <p class="modal-intro">Здесь собраны решения самых частых проблем при работе с Докой. Если вашей проблемы нет в списке — напишите <a href="mailto:ilya.babikov@gmail.com">ilya.babikov@gmail.com</a> и приложите файл логов <code>~/.doka/server.log</code>.</p>
+
+    <h3>Не установлен Visual C++ Redistributable (Windows)</h3>
+    <p><strong>Симптомы:</strong> приложение открывается, модель скачивается, но на любой вопрос — «Попробуй ещё раз» или «Не удалось запустить языковую модель».</p>
+    <p><strong>Решение:</strong></p>
+    <ol>
+      <li>Скачайте <a href="https://aka.ms/vs/17/release/vc_redist.x64.exe" target="_blank" rel="noopener">Visual C++ Redistributable 2022</a></li>
+      <li>Установите его</li>
+      <li>Перезапустите Доку</li>
+    </ol>
+
+    <h3>Процессор не поддерживает AVX2</h3>
+    <p><strong>Симптомы:</strong> то же сообщение об ошибке. Встречается на процессорах до ~2013 года выпуска (Intel до Haswell, AMD до Excavator).</p>
+    <p><strong>Как проверить:</strong> откройте Диспетчер задач → Производительность → ЦП. Если в характеристиках нет упоминания AVX2, ваш процессор не поддерживается.</p>
+    <p><strong>Решение:</strong> к сожалению, на данный момент Дока требует поддержку AVX2. Мы работаем над совместимостью со старыми процессорами.</p>
+
+    <hr/>
+
+    <h2>Приложение зависает — загрузка без ответа</h2>
+    <p><strong>Симптомы:</strong> после отправки вопроса крутится индикатор загрузки, но ответа нет. Через 2 минуты появляется сообщение об ошибке.</p>
+    <p><strong>Возможные причины и решения:</strong></p>
+    <ol>
+      <li><strong>Не хватает оперативной памяти.</strong> Закройте другие приложения и попробуйте снова. Если не помогает — переключитесь на модель меньшего размера (низкое качество).</li>
+      <li><strong>Модель слишком большая для вашего компьютера.</strong> Переключите качество на «низкое» в настройках. Это загрузит модель на 1.7B параметров, которая требует значительно меньше ресурсов.</li>
+      <li><strong>Первый запуск после скачивания.</strong> Первый вопрос может обрабатываться дольше обычного — модели нужно загрузиться в память. Подождите. Если через 2 минуты появилась ошибка — перезапустите приложение.</li>
+    </ol>
+
+    <hr/>
+
+    <h2>«Не хватает места в контексте модели»</h2>
+    <p><strong>Причина:</strong> диалог стал слишком длинным и превысил размер контекстного окна модели.</p>
+    <p><strong>Решение:</strong> начните новый чат. Длинные диалоги с большим количеством сообщений расходуют контекст модели. Если задача сложная — разбейте её на несколько отдельных чатов.</p>
+
+    <hr/>
+
+    <h2>Ошибка TLS при скачивании модели</h2>
+    <p><strong>Симптомы:</strong> при первом запуске модель не скачивается. Сообщение об ошибке упоминает TLS, SSL или сертификаты.</p>
+    <p><strong>Причина:</strong> антивирус перехватывает HTTPS-трафик для проверки (Kaspersky, ESET, Avast и другие).</p>
+    <p><strong>Решение:</strong></p>
+    <ol>
+      <li>Откройте настройки антивируса</li>
+      <li>Найдите раздел «Проверка защищённых соединений» или «HTTPS-инспекция»</li>
+      <li>Отключите эту функцию или добавьте <code>huggingface.co</code> в исключения</li>
+      <li>Нажмите «Попробовать снова» в Доке</li>
+    </ol>
+
+    <hr/>
+
+    <h2>Приложение не запускается / чёрный экран</h2>
+    <h3>Windows</h3>
+    <ol>
+      <li>Убедитесь, что установлен <a href="https://aka.ms/vs/17/release/vc_redist.x64.exe" target="_blank" rel="noopener">Visual C++ Redistributable 2022</a></li>
+      <li>Попробуйте запустить от имени администратора</li>
+      <li>Проверьте, что антивирус не заблокировал файлы приложения</li>
+    </ol>
+    <h3>macOS</h3>
+    <ol>
+      <li><strong>Mac на процессоре Intel не поддерживается.</strong> Дока работает только на Mac с процессором Apple Silicon (M1, M2, M3, M4). Если у вас Mac на Intel — приложение не запустится.</li>
+      <li>Минимальная поддерживаемая версия — macOS 13 (Ventura). На macOS 12 и ниже приложение может не работать.</li>
+      <li>При первом запуске macOS может запросить разрешение — нажмите «Открыть» в диалоге безопасности (Системные настройки → Конфиденциальность и безопасность).</li>
+    </ol>
+
+    <hr/>
+
+    <h2>Вчера работало, сегодня — нет</h2>
+    <p><strong>Симптомы:</strong> Дока работала нормально, но при следующем запуске на любой вопрос — ошибка.</p>
+    <p><strong>Решения (по порядку):</strong></p>
+    <ol>
+      <li><strong>Перезапустите приложение</strong> — полностью закройте Доку и откройте заново.</li>
+      <li><strong>Проверьте свободное место на диске</strong> — модели занимают от 1 до 5 ГБ. Если диск заполнился, модель может не загрузиться.</li>
+      <li><strong>Переключите качество модели</strong> — попробуйте выбрать другой уровень качества, затем вернитесь на прежний. Это заново инициализирует модель.</li>
+      <li><strong>Сбросьте модель</strong> — удалите папку с моделями и перезапустите приложение:
+        <ul style="margin-top:6px;">
+          <li>Windows: удалите <code>C:\Users\&lt;ваш_пользователь&gt;\.doka\models\</code></li>
+          <li>macOS: удалите <code>~/.doka/models/</code></li>
+        </ul>
+        <p style="margin-top:6px;">Дока автоматически скачает модель заново при запуске.</p>
+      </li>
+      <li><strong>Сбросьте браузер</strong> — если не работают задачи с поиском или открытием сайтов, удалите кеш Chromium:
+        <ul style="margin-top:6px;">
+          <li>Windows: удалите <code>%LOCALAPPDATA%\ms-playwright\</code></li>
+          <li>macOS: удалите <code>~/Library/Caches/ms-playwright/</code></li>
+        </ul>
+        <p style="margin-top:6px;">Дока скачает браузер заново при следующем запуске.</p>
+      </li>
+    </ol>
+
+    <hr/>
+
+    <h2>Как найти файл логов</h2>
+    <p>Файл логов содержит техническую информацию об ошибках и помогает нам разобраться в проблеме.</p>
+    <ul>
+      <li><strong>Windows:</strong> <code>C:\Users\&lt;ваш_пользователь&gt;\.doka\server.log</code></li>
+      <li><strong>macOS:</strong> <code>~/.doka/server.log</code></li>
+    </ul>
+    <p>Если вы пишете в поддержку — приложите этот файл к письму.</p>
+
+    <hr/>
+
+    <h2>Минимальные системные требования</h2>
+    <table>
+      <thead>
+        <tr><th></th><th>Windows</th><th>macOS</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ОС</td><td>Windows 10+</td><td>macOS 13 (Ventura)+</td></tr>
+        <tr><td>Процессор</td><td>x64 с поддержкой AVX2 (Intel Haswell+ / AMD Excavator+)</td><td>Apple Silicon (M1, M2, M3, M4). Intel Mac не поддерживается</td></tr>
+        <tr><td>ОЗУ</td><td>8 ГБ (минимум), 16 ГБ (рекомендуется)</td><td>8 ГБ (минимум), 16 ГБ (рекомендуется)</td></tr>
+        <tr><td>Диск</td><td>6 ГБ свободного места</td><td>6 ГБ свободного места</td></tr>
+        <tr><td>Интернет</td><td>Нужен при первом запуске (модель ~5 ГБ + браузер ~160 МБ)</td><td>То же</td></tr>
+        <tr><td>Дополнительно</td><td>Visual C++ Redistributable 2022</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <script>
   // Custom cursor
@@ -1204,6 +1491,11 @@
   }
 
   setTimeout(nextMessage, 800)
+
+  // Close modal on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('troubleshooting').classList.remove('open')
+  })
 </script>
 </body>
 </html>
