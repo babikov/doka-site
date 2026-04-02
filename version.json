@@ -2,6 +2,6 @@
   "version": "1.4.1",
   "url": {
     "mac": "https://github.com/babikov/doka-site/releases/download/v1.4.1/Doka-1.4.1-arm64.dmg",
-    "win": "https://github.com/babikov/doka-site/releases/download/v1.4.1/Doka.Setup.1.4.1.exe"
+    "win": "https://github.com/babikov/doka-site/releases/download/v1.4.1/Doka-Setup-1.4.1.exe"
   }
 }
