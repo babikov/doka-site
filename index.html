@@ -687,7 +687,8 @@
     <a href="#features" class="btn-secondary">Как это работает</a>
   </div>
 
-  <p class="hero-note">Без регистрации · Без подписки · Windows & Mac</p>
+  <p class="hero-note">Без регистрации · Без подписки · Windows & Mac · <a href="/security" style="color:inherit;text-decoration:underline;text-underline-offset:3px;opacity:0.7">Как мы работаем с данными</a></p>
+  <p class="download-count" id="download-count-hero" style="display:none;margin-top:8px;font-size:13px;color:var(--text3)"></p>
 
   <!-- macOS: инструкция «файл повреждён» в hero -->
   <div class="macos-tip" style="animation: fadeUp 0.6s 0.5s ease both; opacity:0">
@@ -1055,6 +1056,7 @@
       Скачать для Mac
     </a>
   </div>
+  <p class="download-count" id="download-count-cta" style="display:none;margin-top:8px;font-size:13px;color:var(--text3)"></p>
   <!-- Правка 8: системные требования -->
   <p class="reveal" style="margin-top:12px;font-size:12px;color:var(--text3)">
     Windows 10/11 · macOS 12+ · от 8 ГБ RAM · от 1 ГБ на диске
@@ -1354,6 +1356,7 @@
   <div class="footer-logo">Дока</div>
   <div>Твой агент на компьютере</div>
   <div class="footer-links">
+    <a href="/security">Безопасность</a>
     <a href="https://github.com/babikov" target="_blank" rel="noopener">Автор</a>
     <a href="mailto:ilya.babikov@gmail.com">Обратная связь</a>
     <button onclick="document.getElementById('troubleshooting').classList.add('open')" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;cursor:none;color:var(--text3);transition:color 0.15s;" onmouseenter="this.style.color='var(--text2)'" onmouseleave="this.style.color='var(--text3)'">Решение проблем</button>
@@ -1626,6 +1629,30 @@
       }
     })
     .catch(() => {}) // fallback: оставляем хардкод-ссылки
+</script>
+
+<script>
+  // Download counter via GitHub Releases API
+  fetch('https://api.github.com/repos/babikov/doka-site/releases')
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(releases => {
+      let total = 0
+      for (const release of releases) {
+        for (const asset of release.assets || []) {
+          if (/\.(exe|dmg)$/i.test(asset.name)) {
+            total += asset.download_count || 0
+          }
+        }
+      }
+      if (total < 1) return
+      const rounded = Math.floor(total / 100) * 100
+      const text = `⬇ Уже скачали ${rounded.toLocaleString('ru-RU')}+ раз`
+      for (const id of ['download-count-hero', 'download-count-cta']) {
+        const el = document.getElementById(id)
+        if (el) { el.textContent = text; el.style.display = '' }
+      }
+    })
+    .catch(() => {}) // не показываем ничего при ошибке
 </script>
 </body>
 </html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Безопасность — Дока</title>
+  <meta name="description" content="Как Дока работает с твоими данными. Без телеметрии, без серверов, всё локально."/>
+  <link rel="canonical" href="https://dokaai.ru/security"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&family=Geologica:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --bg2: #0f0f0f;
+      --bg3: #161616;
+      --border: #1e1e1e;
+      --border2: #2a2a2a;
+      --text: #e8e6e0;
+      --text2: #7a7870;
+      --text3: #3a3836;
+      --accent: #d4ff00;
+      --accent2: #b8e000;
+      --accent-dim: rgba(212,255,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Geologica', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,8,8,0.9);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-download {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #000;
+      background: var(--accent);
+      padding: 8px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .nav-download:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+
+    .page-label {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      color: var(--text2);
+      font-size: 16px;
+      margin-bottom: 64px;
+      max-width: 520px;
+    }
+
+    .qa {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+    .qa:last-of-type {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .qa-q {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .qa-a {
+      color: var(--text2);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .qa-a p + p { margin-top: 12px; }
+
+    .qa-a code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: var(--text);
+    }
+
+    .warning {
+      margin-top: 16px;
+      padding: 16px 20px;
+      background: rgba(212,255,0,0.04);
+      border: 1px solid rgba(212,255,0,0.12);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--text2);
+    }
+    .warning strong { color: var(--text); }
+
+    .badge-none {
+      display: inline-block;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(212,255,0,0.2);
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text3);
+    }
+
+    .footer-logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .footer-links a {
+      color: var(--text3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text2); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      main { padding: 100px 20px 60px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Дока</a>
+  <a href="/#hero-download" class="nav-download">Скачать</a>
+</nav>
+
+<main>
+  <p class="page-label">Безопасность</p>
+  <h1>Что происходит с твоими данными</h1>
+  <p class="subtitle">Прямые ответы на вопросы, которые задают разработчики перед скачиванием.</p>
+
+  <div class="qa">
+    <p class="qa-q">Что приложение делает с моими данными?</p>
+    <div class="qa-a">
+      <p>Всё работает локально. По умолчанию языковая модель загружается прямо в процесс приложения — GGUF-файл лежит у тебя на диске, запросы никуда не уходят.</p>
+      <p>Серверов Доки не существует — некуда отправлять данные. Это не маркетинговая фраза: у приложения нет бэкенда, нет облака, нет аккаунтов.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <p class="qa-q">Какие данные собираются?</p>
+    <div class="qa-a">
+      <p><strong style="color:var(--text)">Приложение</strong> — никакой телеметрии, аналитики, счётчиков запусков и отчётов о крешах. Дока не отправляет ничего ни при запуске, ни в процессе работы. Проверь в Charles Proxy или Wireshark: наружу не уйдёт ни одного байта, пока ты сам не сделаешь запрос к модели.</p>
+      <p><strong style="color:var(--text)">Этот сайт</strong> — использует Яндекс Метрику. Метрика собирает стандартную веб-аналитику: страницы, источники трафика, клики, записи сессий. Данные обрабатываются по <a href="https://yandex.ru/legal/confidential/" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline;text-underline-offset:3px">политике Яндекса</a>. Если это неприемлемо — блокируй через uBlock Origin или аналог.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <p class="qa-q">Какие разрешения запрашивает приложение?</p>
+    <div class="qa-a">
+      <p><strong style="color:var(--text)">Файловая система</strong> — только к папке, которую ты явно выбираешь через диалог «Папка агента». Дока не сканирует диск самостоятельно.</p>
+      <p><strong style="color:var(--text)">Сеть</strong> — для обращения к языковой модели.
+      <p><strong style="color:var(--text)">Браузер</strong> — только с твоего явного подтверждения в диалоге. Без согласия браузер не запускается.</p>
+      <p><strong style="color:var(--text)">Терминал</strong> — выполнение команд тоже требует подтверждения в диалоге. Можно запомнить разрешение на текущий сеанс, при следующем запуске снова спросит.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <p class="qa-q">Почему код закрытый?</p>
+    <div class="qa-a">
+      <p>Коммерческая разработка — это честный ответ.</p>
+      <p>При этом закрытый код не означает «верь на слово». Все сетевые запросы приложения проверяемы в реальном времени: открой <code>Charles Proxy</code>, <code>Wireshark</code> или встроенный DevTools Electron — увидишь только запросы к выбранному тобой провайдеру моделей.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <p class="qa-q">Можно подключить облачный AI — ChatGPT, Claude, GigaChat?</p>
+    <div class="qa-a">
+      <p>Да. Дока поддерживает любой OpenAI-совместимый API (OpenAI, Anthropic через прокси, Mistral, локальный Ollama, LM Studio и любой сервер с <code>/chat/completions</code>) и MCP-серверы. Ключ API вводишь ты сам — он хранится на твоём устройстве и передаётся только в момент запроса напрямую к выбранному провайдеру.</p>
+      <div class="warning">
+        <strong>Важно про облачные модели:</strong> при использовании стороннего API (OpenAI, Anthropic, Сбер и др.) твои запросы и данные обрабатываются по политике конфиденциальности этого провайдера. Дока работает только как интерфейс — данные идут напрямую от тебя к провайдеру, не через какие-либо серверы Доки.
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <p class="qa-q">Как проверить самому?</p>
+    <div class="qa-a">
+      <p>Три инструмента, которые покажут весь трафик приложения:</p>
+      <p><code>Charles Proxy</code> — GUI, удобен для macOS и Windows, показывает запросы в реальном времени.</p>
+      <p><code>Wireshark</code> — более низкоуровневый, фильтруй по порту или хосту.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">Дока</div>
+  <div>Твой агент на компьютере</div>
+  <div class="footer-links">
+    <a href="/">Главная</a>
+    <a href="https://github.com/babikov" target="_blank" rel="noopener">Автор</a>
+    <a href="mailto:ilya.babikov@gmail.com">Обратная связь</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,112 +1,75 @@
-# Дока — твой агент на компьютере
+# Doka — Your AI Agent on Your Computer
 
-**Дока** — это AI-агент, который работает у тебя на компьютере. Без VPN. Без подписки. Без слежки.
+**Doka** is a desktop AI agent for Windows and Mac. It searches the web, reads pages, works with your files, runs terminal commands, and shows every step it takes — all locally, for free, without sending your data anywhere.
 
-Ищет в сети, читает сайты, **работает с файлами на диске** и показывает **каждый шаг** — локально, бесплатно и без зарубежных серверов. Модель запускается на твоём устройстве; опасные действия выполняются **только с твоего подтверждения**.
-
-> Без регистрации · Без подписки · Windows & Mac · Автообновление
+> No registration · No subscription · Windows & Mac · Auto-updates
 
 ---
 
-## Возможности
+## Why Doka
 
-| | Дока | Облачные агенты |
+Most AI tools work in the cloud: your files, requests, and context go to someone else's server. Doka runs the model directly on your machine. There are no Doka servers — nowhere for your data to go.
+
+| | Doka | Cloud agents |
 |---|---|---|
-| Без VPN | ✓ | ✗ Нужен VPN |
-| Данные на твоём ПК | ✓ | ✗ Уходят на сервер |
-| Стоимость | ✓ Бесплатно | ✗ от $20/мес |
-| Локальная AI-модель | ✓ | ✗ |
-| Windows | ✓ | ✗ Часто только браузер или только macOS |
-| macOS | ✓ | ✗ Часто только браузер |
-| Файлы на диске (чтение, правки) | ✓ | ✗ |
-| Подтверждение перед рискованными действиями | ✓ | зависит от сервиса |
-| Видно, что делает агент (шаги) | ✓ | ✗ |
-
-- **Поиск в интернете** — находит актуальную информацию, читает страницы, собирает данные из нескольких источников.
-- **Работа в браузере** — открывает сайты, заполняет формы, взаимодействует со страницами как человек (с запросом разрешения там, где это нужно).
-- **Файлы** — читает и изменяет файлы в доступных папках; после записи агент может перепроверить результат. В чат можно прикрепить несколько файлов.
-- **Прозрачность** — лента шагов агента: видно поиск, вызовы инструментов и ход задачи.
-- **Память и настройки** — **кастомные инструкции** (как себя вести) и **память** о тебе; **поиск по истории чатов**, чтобы не терять контекст.
-- **Модель Qwen3.5** — текстовая модель в приложении, большой контекст для длинных диалогов и документов.
-- **Полная приватность** — запросы не улетают в облако ради инференса. Интернет нужен для поиска и сайтов; сама модель считает локально. Удобно для документов, клиентов и коммерческой тайны.
-- **На русском языке** — понимает разговорный русский, отвечает без акцента и без кальки с английского. Проверено на новостях, Хабре и Госуслугах.
-- **Бесплатно навсегда** — базовые возможности бесплатны без ограничений по времени.
-- **Автообновление** — новые версии подтягиваются через встроенный механизм обновления (electron-updater).
+| Works without VPN | ✓ | ✗ |
+| Data stays on your PC | ✓ | ✗ sent to servers |
+| Price | ✓ Free | ✗ from $20/mo |
+| Local AI model | ✓ | ✗ |
+| Windows support | ✓ | ✗ often browser-only |
+| Files on disk | ✓ read & edit | ✗ |
+| Confirms before risky actions | ✓ | depends on service |
+| Shows what the agent is doing | ✓ | ✗ |
 
 ---
 
-## Что умеет Дока
+## What Doka Can Do
 
-Вот реальные примеры того, что можно попросить прямо сейчас:
+**Web search & browsing**
+Finds up-to-date information, reads pages, and pulls data from multiple sources. Can open sites, fill forms, and interact with pages like a human — with your confirmation when needed.
 
-**Файлы и папки**
-> «Открой этот `README.md`, кратко опиши структуру проекта» или «Сохрани итог в новый файл в моей папке»
+**File system**
+Reads, creates, edits, renames, and deletes files inside the folder you choose. Works in a loop: run → see error → fix file → run again — without you stepping in at every point.
 
-Работает с текстовыми файлами в рамках разрешённого доступа; перед чувствительными операциями — подтверждение.
+**Terminal**
+Runs shell commands — scripts, builds, git operations, any CLI tool installed on your system. Every execution requires your explicit confirmation. You can allow it for the session.
 
-**Новости и информация**
-> «Найди последние новости про санкции и кратко объясни что изменилось»
+**Memory**
+Remembers facts you tell it to keep: your name, projects, preferences. Also automatically saves a short summary after each conversation — so next time it already knows what you were working on.
 
-Ищет по нескольким открытым источникам, собирает в понятный ответ.
+**Custom instructions**
+Set a permanent prompt that applies to every chat: response style, language, context about your work.
 
-**Краткий пересказ статьи**
-> «Открой эту статью и перескажи главное за минуту»
+**Chat history search**
+Instant search across all past conversations. Find an answer from last week in seconds.
 
-Читает страницу по ссылке и выдаёт краткое резюме без лишней воды.
+**Bring your own model**
+Switch from the built-in local model to any OpenAI-compatible API — OpenAI, Anthropic, Mistral, Ollama, LM Studio. Your API key stays on your device and goes only to the provider you choose.
 
-**Перевод и анализ текста**
-> «Переведи этот английский текст и выдели три главные мысли»
+**MCP servers**
+Connect external tools via Model Context Protocol right from the UI.
 
-Переводит и структурирует — без копипасты в переводчик и обратно.
-
-**Госуслуги и официальные сайты**
-> «Как получить загранпаспорт через Госуслуги? Какие документы нужны?»
-
-Читает актуальные инструкции прямо с официального сайта — никаких устаревших данных.
-
-**Проверка работодателя**
-> «Что пишут в открытых источниках об этой компании? Ищу туда работу»
-
-Ищет отзывы, новости и упоминания — даёт честную картину до собеседования.
-
-**Разбор договоров**
-> «Объясни простыми словами что означают эти пункты в договоре аренды»
-
-Разбирает юридический текст на человеческий язык, указывает на подводные камни.
-
-**Ответы на отзывы**
-> «Напиши вежливый ответ на негативный отзыв о моём магазине»
-
-Составит корректный ответ в нужном тоне — хоть для Wildberries, хоть для 2ГИС.
-
-**Претензии и заявления**
-> «Помоги написать претензию в магазин на русском, по закону о защите прав потребителей»
-
-Составляет документ на понятном русском — без юридического птичьего языка.
-
-**Отзывы об отелях**
-> «Проверь отзывы на этот отель на Яндекс Картах и Booking, стоит ли бронировать?»
-
-Читает отзывы с обеих площадок и выдаёт короткий вердикт.
+**Full transparency**
+A live timeline shows every step: what the agent searched, what file it opened, what command it ran. No black box.
 
 ---
 
-## Быстрый старт
+## Download
 
-### Установка
+**[→ dokaai.ru](https://dokaai.ru)**
 
-**Windows:**
-Скачай установщик `.exe` со [страницы релизов](https://github.com/babikov/doka-site/releases/latest) и запусти его. Следуй инструкциям установщика.
+Windows `.exe` installer and macOS `.dmg` are available on the [releases page](https://github.com/babikov/doka-site/releases/latest).
 
-**macOS (Apple Silicon):**
-Скачай файл `.dmg` со [страницы релизов](https://github.com/babikov/doka-site/releases/latest), открой его и перетащи Дока в папку «Программы».
+---
 
-### Первый запуск
+## Privacy & Security
 
-1. Запусти Дока
-2. Дождись загрузки выбранной AI-модели (при первом запуске или смене модели — по ситуации)
-3. При желании задай **кастомные инструкции** и включи **память** в настройках
-4. Напиши задачу на русском или прикрепи файлы — Дока покажет шаги и выполнит цепочку действий
-5. На запросы подтверждения для чувствительных операций отвечай осознанно
+The app collects no telemetry, no analytics, no crash reports. Nothing is sent anywhere on launch or during use.
 
-Регистрация не нужна. Интернет нужен для поиска и работы с сайтами — инференс модели идёт локально на твоём ПК.
+→ [Full security details](https://dokaai.ru/security)
+
+---
+
+## License
+
+MIT
