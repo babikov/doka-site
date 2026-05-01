@@ -67,9 +67,3 @@ Windows `.exe` installer and macOS `.dmg` are available on the [releases page](h
 The app collects no telemetry, no analytics, no crash reports. Nothing is sent anywhere on launch or during use.
 
 → [Full security details](https://dokaai.ru/security)
-
----
-
-## License
-
-MIT
