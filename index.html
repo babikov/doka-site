@@ -148,6 +148,24 @@
     }
     .nav-download:hover { background: var(--accent2); transform: translateY(-1px); }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-support {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: inherit;
+      text-decoration: none;
+      color: var(--text2);
+      transition: color 0.15s;
+    }
+    .nav-support:hover { color: #e87890; }
+    .nav-support svg { display: block; flex-shrink: 0; }
+
     /* Hero */
     .hero {
       min-height: 100vh;
@@ -654,8 +672,12 @@
 
 <nav id="nav">
   <div class="nav-logo">Дока</div>
-  <div style="display:flex;align-items:center;gap:20px;">
+  <div class="nav-actions">
     <button onclick="document.getElementById('troubleshooting').classList.add('open')" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;cursor:none;color:var(--text3);transition:color 0.15s;" onmouseenter="this.style.color='var(--text2)'" onmouseleave="this.style.color='var(--text3)'">Решение проблем</button>
+    <a href="https://boosty.to/creepach" class="nav-support" target="_blank" rel="noopener" title="Поддержать проект на Boosty">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      <span>Поддержать</span>
+    </a>
     <a href="#cta-download" class="nav-download">Скачать</a>
   </div>
 </nav>
