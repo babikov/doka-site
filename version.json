@@ -3,6 +3,6 @@
   "url": {
     "mac": "https://github.com/babikov/doka-site/releases/download/v1.5.6/Doka-1.5.6-arm64.dmg",
     "win": "https://github.com/babikov/doka-site/releases/download/v1.5.6/Doka-Setup-1.5.6.exe",
-    "linux": "https://github.com/babikov/doka-site/releases/download/v1.5.6/Doka-1.5.6-x64.AppImage"
+    "linux": "https://github.com/babikov/doka-site/releases/download/v1.5.6/Doka-1.5.6-amd64.deb"
   }
 }
