@@ -1,8 +1,8 @@
 {
-  "version": "1.5.10",
+  "version": "1.5.11",
   "url": {
-    "mac": "https://github.com/babikov/doka-site/releases/download/v1.5.10/Doka-1.5.10-arm64.dmg",
-    "win": "https://github.com/babikov/doka-site/releases/download/v1.5.10/Doka-Setup-1.5.10.exe",
-    "linux": "https://github.com/babikov/doka-site/releases/download/v1.5.10/Doka-1.5.10-amd64.deb"
+    "mac": "https://github.com/babikov/doka-site/releases/download/v1.5.11/Doka-1.5.11-arm64.dmg",
+    "win": "https://github.com/babikov/doka-site/releases/download/v1.5.11/Doka-Setup-1.5.11.exe",
+    "linux": "https://github.com/babikov/doka-site/releases/download/v1.5.11/Doka-1.5.11-amd64.deb"
   }
 }
