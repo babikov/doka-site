@@ -40,15 +40,10 @@
     "description": "Desktop AI-агент для Windows и macOS. Работает с файлами на диске, ищет в интернете, запоминает контекст. Без VPN, без подписки, модель работает локально.",
     "url": "https://dokaai.ru",
     "downloadUrl": "https://dokaai.ru",
-    "softwareVersion": "1.5.1",
+    "softwareVersion": "1.5.13",
     "author": {
       "@type": "Person",
       "name": "Ilya Babikov"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "ratingCount": "1723"
     }
   }
   </script>
@@ -655,6 +650,10 @@
 
     @media (max-width: 640px) {
       nav { padding: 16px 20px; }
+      .nav-actions { gap: 14px; }
+      .nav-actions > button { display: none; }   /* «Решение проблем» — доступно в футере */
+      .nav-support span { display: none; }        /* оставляем только иконку-сердечко */
+      .nav-download { padding: 7px 14px; letter-spacing: 0.05em; }
       .section { padding: 80px 20px; }
       .compare { display: none; }
       footer { flex-direction: column; gap: 12px; text-align: center; }
@@ -725,6 +724,7 @@
   </div>
 
   <p class="hero-note">Без регистрации · Без подписки · Windows & Mac · <a href="/security" style="color:inherit;text-decoration:underline;text-underline-offset:3px;opacity:0.7">Как мы работаем с данными</a></p>
+  <p class="hero-sysreq" style="margin-top:8px;font-size:12px;color:var(--text3)">Windows 10/11 (нужен CPU с AVX2) · macOS 13+ (Apple Silicon) · Linux (.deb / AppImage) · от 8 ГБ RAM</p>
   <p class="download-count" id="download-count-hero" style="display:none;margin-top:8px;font-size:13px;color:var(--text3)"></p>
 
   <!-- macOS: инструкция «файл повреждён» в hero -->
@@ -866,6 +866,30 @@
       <h3>Помнит прошлые разговоры</h3>
       <p>После каждой сессии Дока сохраняет краткое резюме диалога. В следующий раз агент уже знает, чем вы занимались раньше.</p>
     </div>
+    <!-- НОВОЕ 1.5.9: Hardware tab -->
+    <div class="feature">
+      <span class="feature-icon">◧</span>
+      <h3>Выбор CPU или GPU</h3>
+      <p>Вкладка «Железо»: запусти модель на видеокарте или процессоре и проверь статус оборудования. Если GPU несовместим — Дока сама переключится на CPU.</p>
+    </div>
+    <!-- НОВОЕ 1.5.10: pre-operation snapshots -->
+    <div class="feature">
+      <span class="feature-icon">◌</span>
+      <h3>Откат изменений</h3>
+      <p>Перед записью, правкой или удалением файла Дока делает снимок. Если агент ошибся — изменения можно откатить.</p>
+    </div>
+    <!-- НОВОЕ 1.5.11: self-critique -->
+    <div class="feature">
+      <span class="feature-icon">◉</span>
+      <h3>Самопроверка ответа</h3>
+      <p>Перед отправкой агент перечитывает свой черновик: если находит пробел или ошибку — исправляет себя сам, прозрачно.</p>
+    </div>
+    <!-- НОВОЕ 1.5.13: live streaming + metrics -->
+    <div class="feature">
+      <span class="feature-icon">◈</span>
+      <h3>Ответ в реальном времени</h3>
+      <p>Текст печатается по мере генерации. Видно скорость (токены/сек), время до первого токена и счётчик токенов на каждом шаге.</p>
+    </div>
   </div>
 
   <div class="compare reveal" style="margin-top:60px">
@@ -925,7 +949,7 @@
       <div class="compare-cell"><span class="check">✓</span> Да</div>
     </div>
     <div class="compare-row">
-      <div class="compare-cell">Windows + macOS</div>
+      <div class="compare-cell">Windows + macOS + Linux</div>
       <div class="compare-cell"><span class="check">✓</span> Да</div>
       <div class="compare-cell"><span class="cross">✗</span> Только браузер</div>
     </div>
@@ -1100,7 +1124,7 @@
   <p class="download-count" id="download-count-cta" style="display:none;margin-top:8px;font-size:13px;color:var(--text3)"></p>
   <!-- Правка 8: системные требования -->
   <p class="reveal" style="margin-top:12px;font-size:12px;color:var(--text3)">
-    Windows 10/11 · macOS 12+ · от 8 ГБ RAM · от 1 ГБ на диске
+    Windows 10/11 (CPU с AVX2) · macOS 13+ (Apple Silicon) · Linux (.deb / AppImage) · от 8 ГБ RAM · от 6 ГБ на диске
   </p>
 
   <!-- macOS: инструкция «файл повреждён» -->
