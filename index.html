@@ -106,6 +106,46 @@
       opacity: 0.4;
     }
 
+    /* Vote banner */
+    .vote-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 10px 48px;
+      background: var(--accent);
+      color: #000;
+      font-size: 13px;
+      line-height: 1.4;
+      text-align: center;
+    }
+    .vote-banner a.vote-link {
+      color: #000;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: #000;
+      color: var(--accent);
+      padding: 6px 16px;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .vote-banner a.vote-link:hover { transform: translateY(-1px); background: #111; }
+    .vote-banner .vote-text { font-weight: 500; }
+    .vote-banner .vote-text strong { font-weight: 700; }
+    body.has-banner nav { top: var(--banner-h, 44px); }
+    @media (max-width: 640px) {
+      .vote-banner { padding: 10px 16px; gap: 10px; flex-wrap: wrap; font-size: 12px; }
+      .vote-banner a.vote-link { padding: 5px 12px; }
+    }
+
     /* Nav */
     nav {
       position: fixed;
@@ -116,7 +156,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid transparent;
-      transition: border-color 0.3s, background 0.3s;
+      transition: border-color 0.3s, background 0.3s, top 0.2s;
     }
     nav.scrolled {
       background: rgba(8,8,8,0.9);
@@ -678,6 +718,23 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/108144062" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 <body>
+
+<div class="vote-banner" id="vote-banner">
+  <span class="vote-text">Дока участвует в <strong>Product Radar</strong> — поддержи проект голосом 🚀</span>
+  <a href="https://productradar.ru/product/doka-lokalnyj-ai-agent/" class="vote-link" target="_blank" rel="noopener">Проголосовать</a>
+</div>
+
+<script>
+  (function () {
+    var banner = document.getElementById('vote-banner');
+    document.body.classList.add('has-banner');
+    function setOffset() {
+      document.documentElement.style.setProperty('--banner-h', banner.offsetHeight + 'px');
+    }
+    setOffset();
+    window.addEventListener('resize', setOffset);
+  })();
+</script>
 
 <div class="cursor" id="cursor"></div>
 
