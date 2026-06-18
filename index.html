@@ -71,6 +71,8 @@
 
     html { scroll-behavior: smooth; }
 
+    a, button, [role="button"], [onclick], summary, label { cursor: pointer; }
+
     body {
       font-family: 'Geologica', sans-serif;
       background: var(--bg);
@@ -79,21 +81,8 @@
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* Custom cursor */
-    .cursor {
-      position: fixed;
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s, width 0.2s, height 0.2s;
-    }
-    .cursor.large { width: 40px; height: 40px; background: transparent; border: 1px solid var(--accent); opacity: 0.5; }
 
     /* Grain overlay */
     body::before {
@@ -104,46 +93,6 @@
       pointer-events: none;
       z-index: 1000;
       opacity: 0.4;
-    }
-
-    /* Vote banner */
-    .vote-banner {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      padding: 10px 48px;
-      background: var(--accent);
-      color: #000;
-      font-size: 13px;
-      line-height: 1.4;
-      text-align: center;
-    }
-    .vote-banner a.vote-link {
-      color: #000;
-      font-family: 'Unbounded', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      background: #000;
-      color: var(--accent);
-      padding: 6px 16px;
-      border-radius: 4px;
-      white-space: nowrap;
-      transition: transform 0.15s, background 0.15s;
-    }
-    .vote-banner a.vote-link:hover { transform: translateY(-1px); background: #111; }
-    .vote-banner .vote-text { font-weight: 500; }
-    .vote-banner .vote-text strong { font-weight: 700; }
-    body.has-banner nav { top: var(--banner-h, 44px); }
-    @media (max-width: 640px) {
-      .vote-banner { padding: 10px 16px; gap: 10px; flex-wrap: wrap; font-size: 12px; }
-      .vote-banner a.vote-link { padding: 5px 12px; }
     }
 
     /* Nav */
@@ -251,6 +200,47 @@
       animation: fadeUp 0.6s ease both;
     }
 
+    .hero-award {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 18px 8px 14px;
+      margin-bottom: 32px;
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      background: linear-gradient(180deg, var(--bg3), var(--bg2));
+      text-decoration: none;
+      cursor: pointer;
+      animation: fadeUp 0.6s 0.05s ease both;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .hero-award, .hero-award * { cursor: pointer; }
+    .hero-award:hover {
+      transform: translateY(-2px);
+      border-color: rgba(212,255,0,0.35);
+      box-shadow: 0 8px 24px -12px var(--accent-glow);
+    }
+    .hero-award-icon { color: var(--accent); flex-shrink: 0; }
+    .hero-award-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.25;
+      text-align: left;
+    }
+    .hero-award-text strong {
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+    .hero-award-rank { color: var(--accent); }
+    .hero-award-src {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--text2);
+    }
+
     .badge-dot {
       width: 6px; height: 6px;
       background: var(--accent);
@@ -308,7 +298,7 @@
       border-radius: 6px;
       text-decoration: none;
       border: none;
-      cursor: none;
+      cursor: pointer;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -348,7 +338,7 @@
       border: 1px solid var(--border2);
       border-radius: 6px;
       transition: color 0.15s, border-color 0.15s;
-      cursor: none;
+      cursor: pointer;
     }
     .btn-secondary:hover { color: var(--text); border-color: var(--border2); }
 
@@ -676,6 +666,7 @@
     }
     .footer-links a:hover { color: var(--text2); }
 
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -699,6 +690,7 @@
       .compare { display: none; }
       footer { flex-direction: column; gap: 12px; text-align: center; }
       .footer-links { flex-wrap: wrap; justify-content: center; }
+      .footer-badge { margin-left: 0; }
       .features { grid-template-columns: 1fr; }
       .usecases { grid-template-columns: 1fr; }
     }
@@ -719,29 +711,11 @@
 <!-- /Yandex.Metrika counter -->
 <body>
 
-<div class="vote-banner" id="vote-banner">
-  <span class="vote-text">Дока участвует в <strong>Product Radar</strong> — поддержи проект голосом 🚀</span>
-  <a href="https://productradar.ru/product/doka-lokalnyj-ai-agent/" class="vote-link" target="_blank" rel="noopener">Проголосовать</a>
-</div>
-
-<script>
-  (function () {
-    var banner = document.getElementById('vote-banner');
-    document.body.classList.add('has-banner');
-    function setOffset() {
-      document.documentElement.style.setProperty('--banner-h', banner.offsetHeight + 'px');
-    }
-    setOffset();
-    window.addEventListener('resize', setOffset);
-  })();
-</script>
-
-<div class="cursor" id="cursor"></div>
 
 <nav id="nav">
   <div class="nav-logo">Дока</div>
   <div class="nav-actions">
-    <button onclick="document.getElementById('troubleshooting').classList.add('open')" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;cursor:none;color:var(--text3);transition:color 0.15s;" onmouseenter="this.style.color='var(--text2)'" onmouseleave="this.style.color='var(--text3)'">Решение проблем</button>
+    <button onclick="document.getElementById('troubleshooting').classList.add('open')" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;cursor: pointer;color:var(--text3);transition:color 0.15s;" onmouseenter="this.style.color='var(--text2)'" onmouseleave="this.style.color='var(--text3)'">Решение проблем</button>
     <a href="https://boosty.to/creepach" class="nav-support" target="_blank" rel="noopener" title="Поддержать проект на Boosty">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
       <span>Поддержать</span>
@@ -764,6 +738,18 @@
   <p class="hero-sub">
     Работает с файлами, ищет в интернете, запоминает контекст — и показывает каждый шаг. Без VPN. Без подписки. Модель работает локально.
   </p>
+
+  <a class="hero-award" href="https://productradar.ru/product/doka-lokalnyj-ai-agent?utm_source=badge" target="_blank" rel="noopener" title="Продукт недели #3 на Product Radar">
+    <svg class="hero-award-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 4h12v3a6 6 0 0 1-12 0V4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M6 5H4a2 2 0 0 0 2 3M18 5h2a2 2 0 0 1-2 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 13v3m-3 4h6m-6 0 .6-2.4a1 1 0 0 1 1-.6h2.8a1 1 0 0 1 1 .6L15 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="hero-award-text">
+      <strong>Продукт недели <span class="hero-award-rank">#3</span></strong>
+      <span class="hero-award-src">Product Radar</span>
+    </span>
+  </a>
 
   <div class="hero-actions" id="hero-download">
     <a href="https://github.com/babikov/doka-site/releases/download/v1.5.0/Doka-Setup-1.5.0.exe" class="btn-primary" id="download">
@@ -1230,7 +1216,7 @@
     color: var(--text2);
     font-family: 'Geologica', sans-serif;
     font-size: 13px;
-    cursor: none;
+    cursor: pointer;
     text-align: left;
     transition: background 0.15s, color 0.15s;
   }
@@ -1308,7 +1294,7 @@
     border: 1px solid var(--border2);
     border-radius: 4px;
     padding: 4px 10px;
-    cursor: none;
+    cursor: pointer;
     transition: background 0.15s, color 0.15s;
   }
   .macos-copy:hover { background: var(--border); color: var(--text); }
@@ -1352,7 +1338,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: none;
+    cursor: pointer;
     font-size: 18px;
     line-height: 1;
     transition: background 0.15s, color 0.15s;
@@ -1483,7 +1469,7 @@
     <a href="https://github.com/babikov" target="_blank" rel="noopener">Автор</a>
     <a href="https://t.me/blogach" target="_blank" rel="noopener">Телеграм канал автора</a>
     <a href="mailto:ilya.babikov@gmail.com">Обратная связь</a>
-    <button onclick="document.getElementById('troubleshooting').classList.add('open')" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;cursor:none;color:var(--text3);transition:color 0.15s;" onmouseenter="this.style.color='var(--text2)'" onmouseleave="this.style.color='var(--text3)'">Решение проблем</button>
+    <button onclick="document.getElementById('troubleshooting').classList.add('open')" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;cursor: pointer;color:var(--text3);transition:color 0.15s;" onmouseenter="this.style.color='var(--text2)'" onmouseleave="this.style.color='var(--text3)'">Решение проблем</button>
   </div>
   <div style="margin-top:8px;font-size:13px;color:var(--text3);">Самозанятый Бабиков Илья Владимирович · ИНН 026616351874</div>
 </footer>
@@ -1612,17 +1598,6 @@
 </div>
 
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor')
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px'
-    cursor.style.top = e.clientY + 'px'
-  })
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('large'))
-    el.addEventListener('mouseleave', () => cursor.classList.remove('large'))
-  })
-
   // Nav scroll
   const nav = document.getElementById('nav')
   window.addEventListener('scroll', () => {
