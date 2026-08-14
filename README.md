@@ -1,3 +1,5 @@
+
+
 # Doka — Your AI Agent on Your Computer
 
 **Doka** is a desktop AI agent for Windows, Mac, and Linux. It searches the web, reads pages, works with your files, runs terminal commands, and shows every step it takes — all locally, for free, without sending your data anywhere.
@@ -58,7 +60,7 @@ A live timeline shows every step: what the agent searched, what file it opened, 
 
 **[→ dokaai.ru](https://dokaai.ru)**
 
-Windows `.exe` installer, macOS `.dmg`, and Linux `.deb` / AppImage builds are available on the [releases page](https://github.com/babikov/doka-site/releases/latest).
+Current version: **v1.7.2**. Windows `.exe` installer, macOS `.dmg`, and Linux `.deb` builds are available on the [releases page](https://github.com/babikov/doka-site/releases/latest).
 
 ---
 
