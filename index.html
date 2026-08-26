@@ -135,6 +135,24 @@
     }
     .nav-download:hover { background: var(--accent2); transform: translateY(-1px); }
 
+    /* Вторичная кнопка: веб-чат. Намеренно контурная — не конкурирует со «Скачать» */
+    .nav-chat {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid var(--border2);
+      padding: 7px 18px;
+      border-radius: 4px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    }
+    .nav-chat:hover { border-color: var(--accent); background: var(--accent-dim); transform: translateY(-1px); }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -687,6 +705,7 @@
       .nav-actions > button { display: none; }   /* «Решение проблем» — доступно в футере */
       .nav-support span { display: none; }        /* оставляем только иконку-сердечко */
       .nav-download { padding: 7px 14px; letter-spacing: 0.05em; }
+      .nav-chat { padding: 6px 12px; letter-spacing: 0.05em; }  /* на телефоне нужнее десктопного приложения — не прячем */
       .section { padding: 80px 20px; }
       .compare { display: none; }
       footer { flex-direction: column; gap: 12px; text-align: center; }
@@ -694,6 +713,13 @@
       .footer-badge { margin-left: 0; }
       .features { grid-template-columns: 1fr; }
       .usecases { grid-template-columns: 1fr; }
+    }
+
+    /* совсем узкие экраны (320 px): поджимаем, чтобы обе кнопки влезли в строку */
+    @media (max-width: 380px) {
+      .nav-actions { gap: 10px; }
+      .nav-chat { padding: 6px 10px; }
+      .nav-download { padding: 7px 12px; }
     }
   </style>
 </head>
@@ -721,6 +747,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
       <span>Поддержать</span>
     </a>
+    <a href="https://cloud.dokaai.ru/?utm_source=dokaai.ru&amp;utm_medium=nav&amp;utm_campaign=web-chat" class="nav-chat">ИИ-чат</a>
     <a href="#cta-download" class="nav-download">Скачать</a>
   </div>
 </nav>
